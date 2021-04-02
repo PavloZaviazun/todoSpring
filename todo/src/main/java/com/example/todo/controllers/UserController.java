@@ -17,7 +17,7 @@ public class UserController {
     private UserDAO userDAO;
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/auth")
+    @PostMapping("/login")
     public void login() {
 //        System.out.println(username);
 //        System.out.println(password);
@@ -25,6 +25,12 @@ public class UserController {
 //        System.out.println(user);
 //        System.out.println(username);
 //        System.out.println(password);
+    }
+
+    @PostMapping("/register")
+    public void register(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userDAO.save(user);
 
     }
 }
