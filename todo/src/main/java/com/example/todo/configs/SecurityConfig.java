@@ -72,9 +72,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth").permitAll()
-                .antMatchers("/todolist/**").permitAll()
-                .antMatchers("/todolists/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers("/todolist/**").hasRole("ADMIN")
+                .antMatchers("/todolists").hasRole("ADMIN")
                 .and()
                 .addFilterBefore(new LoginFilter("/auth", authenticationManager(), userDAO), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new AllRequestsFilter(authTokenDAO), UsernamePasswordAuthenticationFilter.class);

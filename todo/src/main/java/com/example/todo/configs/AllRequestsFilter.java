@@ -24,10 +24,8 @@ public class AllRequestsFilter extends GenericFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         Authentication authentication = null;
-//        HttpServletRequest servletRequest = (HttpServletRequest) request;
-        HttpServletResponse servletResponse = (HttpServletResponse) response;
-        String authorizationToken = servletResponse.getHeader("Authorization");
-        System.out.println(authorizationToken);
+        HttpServletRequest servletRequest = (HttpServletRequest) request;
+        String authorizationToken = servletRequest.getHeader("Authorization");
         if(authorizationToken != null && authorizationToken.startsWith("Bearer ")) {
             String token = authorizationToken.replaceAll("Bearer ", "");
             String tokenData = Jwts.parser().
@@ -37,6 +35,7 @@ public class AllRequestsFilter extends GenericFilter {
                     .getSubject();
             AuthToken authToken = authTokenDAO.findByToken(token);
             User user = authToken.getUser();
+            System.out.println(user);
             if(user != null) {
                 authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
             }

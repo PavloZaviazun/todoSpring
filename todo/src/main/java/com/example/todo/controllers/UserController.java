@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSessionEvent;
+
 @RestController
 @AllArgsConstructor
 public class UserController {
@@ -16,8 +18,7 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/auth")
-    public void login(@RequestParam String username, @RequestParam String password) {
-        System.out.println("MAPPPTINg");
+    public void login() {
 //        System.out.println(username);
 //        System.out.println(password);
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
